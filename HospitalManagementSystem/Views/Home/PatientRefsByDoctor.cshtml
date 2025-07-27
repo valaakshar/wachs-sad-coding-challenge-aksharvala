@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Patient References by Doctor";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Patient References by Doctor</h2>
+        <p class="lead">Show a list of patients' Medical Reference Numbers that have been treated by a given doctor.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Select Doctor</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="doctorName" class="form-label">Doctor:</label>
+                        <select class="form-select" id="doctorName" name="doctorName" required>
+                            <option value="">Select a doctor...</option>
+                            @foreach (var doctor in ViewBag.Doctors)
+                            {
+                                <option value="@doctor" @(ViewBag.SelectedDoctor == doctor ? "selected" : "")>@doctor</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">View Patient References</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    @if (ViewBag.PatientRefs != null)
+    {
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Patient References Treated by @ViewBag.SelectedDoctor</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.PatientRefs.Count > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Medical Reference Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var patientRef in ViewBag.PatientRefs)
+                                    {
+                                        <tr>
+                                            <td>@patientRef</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            No patient references found for this doctor.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div> 

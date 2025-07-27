@@ -1,0 +1,116 @@
+@{
+    ViewData["Title"] = "Home";
+    var userSession = ViewBag.UserSession as HospitalManagementSystem.Models.UserSession;
+    var userService = ViewBag.UserService as HospitalManagementSystem.Services.UserService;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Hospital Management System</h1>
+    <p class="lead">Welcome to the Hospital Management System.</p>
+    
+    @if (userSession != null)
+    {
+        <div class="alert alert-info">
+            <strong>Current Role:</strong> @userSession.Role
+            @if (!string.IsNullOrEmpty(userSession.ProviderName))
+            {
+                <br><strong>Provider:</strong> @userSession.ProviderName
+            }
+            @if (!string.IsNullOrEmpty(userSession.HospitalLocation))
+            {
+                <br><strong>Hospital:</strong> @userSession.HospitalLocation
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <strong>Please login to access the system.</strong>
+            <a href="/Account/Login" class="btn btn-primary ms-2">Login Now</a>
+        </div>
+    }
+</div>
+
+@if (userSession != null)
+{
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Data Queries</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @if (userService.CanViewPracticeInformation(userSession.Role))
+                        {
+                            <li class="list-group-item">
+                                <a href="/Home/ProvidersByHospital" class="btn btn-link text-primary p-0">
+                                    <i class="bi bi-hospital"></i> View Providers by Hospital
+                                </a>
+                            </li>
+                        }
+                        @if (userService.CanViewClientName(userSession.Role))
+                        {
+                            <li class="list-group-item">
+                                <a href="/Home/PatientsByProvider" class="btn btn-link text-primary p-0">
+                                    <i class="bi bi-people"></i> View Patients by Provider
+                                </a>
+                            </li>
+                        }
+                        @if (userService.CanViewClientMedicalRecordNumber(userSession.Role))
+                        {
+                            <li class="list-group-item">
+                                <a href="/Home/PatientRefsByDoctor" class="btn btn-link text-primary p-0">
+                                    <i class="bi bi-person-badge"></i> View Patient References by Doctor
+                                </a>
+                            </li>
+                        }
+                        @if (userService.CanViewClientName(userSession.Role))
+                        {
+                            <li class="list-group-item">
+                                <a href="/Home/PatientsByDoctorAtHospital" class="btn btn-link text-primary p-0">
+                                    <i class="bi bi-building"></i> View Patients by Doctor at Hospital
+                                </a>
+                            </li>
+                        }
+                        @if (userService.CanViewClientName(userSession.Role))
+                        {
+                            <li class="list-group-item">
+                                <a href="/Home/UntreatedPatients" class="btn btn-link text-primary p-0">
+                                    <i class="bi bi-exclamation-triangle"></i> View Untreated Patients
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Treatment Management</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @if (userService.CanViewTreatmentDetails(userSession.Role, userSession.HospitalLocation))
+                        {
+                            <li class="list-group-item">
+                                <a href="/Home/Treatments" class="btn btn-link text-primary p-0">
+                                    <i class="bi bi-list-ul"></i> View All Treatments
+                                </a>
+                            </li>
+                        }
+                        @if (userService.CanEditTreatment(userSession.Role, userSession.ProviderName, ""))
+                        {
+                            <li class="list-group-item">
+                                <a href="/Home/CreateTreatment" class="btn btn-link text-primary p-0">
+                                    <i class="bi bi-plus-circle"></i> Create New Treatment
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

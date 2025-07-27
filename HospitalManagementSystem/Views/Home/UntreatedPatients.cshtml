@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Untreated Patients";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Untreated Patients</h2>
+        <p class="lead">Show a list of patients' names that have yet to receive treatment but have been admitted to a given practice.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Select Hospital</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="hospitalName" class="form-label">Hospital:</label>
+                        <select class="form-select" id="hospitalName" name="hospitalName" required>
+                            <option value="">Select a hospital...</option>
+                            @foreach (var hospital in ViewBag.Hospitals)
+                            {
+                                <option value="@hospital" @(ViewBag.SelectedHospital == hospital ? "selected" : "")>@hospital</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">View Untreated Patients</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    @if (ViewBag.UntreatedPatients != null)
+    {
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Untreated Patients at @ViewBag.SelectedHospital</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.UntreatedPatients.Count > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var patient in ViewBag.UntreatedPatients)
+                                    {
+                                        <tr>
+                                            <td>@patient</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            No untreated patients found for this hospital.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div> 

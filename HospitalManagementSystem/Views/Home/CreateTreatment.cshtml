@@ -1,0 +1,87 @@
+@model HospitalManagementSystem.Models.Treatment
+@{
+    ViewData["Title"] = "Create Treatment";
+    var userSession = ViewBag.UserSession as HospitalManagementSystem.Models.UserSession;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Create New Treatment</h2>
+        <p class="lead">Add a new treatment record to the system.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Treatment Information</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="CreateTreatment" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Hospital" class="form-label">Hospital *</label>
+                        <select asp-for="Hospital" class="form-select" required>
+                            <option value="">Select Hospital</option>
+                            @foreach (var hospital in ViewBag.Hospitals)
+                            {
+                                <option value="@hospital">@hospital</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Hospital" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Patient" class="form-label">Patient *</label>
+                        <select asp-for="Patient" class="form-select" required>
+                            <option value="">Select Patient</option>
+                            @foreach (var patient in ViewBag.Patients)
+                            {
+                                <option value="@patient.MedicalReferenceNumber">@patient.MedicalReferenceNumber - @patient.PatientName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Patient" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Provider" class="form-label">Provider</label>
+                        <select asp-for="Provider" class="form-select">
+                            <option value="">Select Provider (Optional)</option>
+                            @foreach (var provider in ViewBag.Providers)
+                            {
+                                <option value="@provider">@provider</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Provider" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Details" class="form-label">Treatment Details</label>
+                        <textarea asp-for="Details" class="form-control" rows="3" placeholder="Enter treatment details..."></textarea>
+                        <span asp-validation-for="Details" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DateTimeDischarged" class="form-label">Date/Time Discharged</label>
+                        <input asp-for="DateTimeDischarged" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="DateTimeDischarged" class="text-danger"></span>
+                        <small class="form-text text-muted">If discharge date is provided, provider and details are required.</small>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="/Home/Treatments" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to Treatments
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Create Treatment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 
