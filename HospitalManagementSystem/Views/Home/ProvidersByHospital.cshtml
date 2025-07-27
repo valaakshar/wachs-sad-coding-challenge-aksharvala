@@ -1,0 +1,82 @@
+@{
+    ViewData["Title"] = "Providers by Hospital";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Providers by Hospital</h2>
+        <p class="lead">Display data for providers available at a given practice.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Select Hospital</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="hospitalName" class="form-label">Hospital:</label>
+                        <select class="form-select" id="hospitalName" name="hospitalName" required>
+                            <option value="">Select a hospital...</option>
+                            @foreach (var hospital in ViewBag.Hospitals)
+                            {
+                                <option value="@hospital" @(ViewBag.SelectedHospital == hospital ? "selected" : "")>@hospital</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">View Providers</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    @if (ViewBag.Providers != null)
+    {
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Providers at @ViewBag.SelectedHospital</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Providers.Count > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Number</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var provider in ViewBag.Providers)
+                                    {
+                                        <tr>
+                                            <td>@provider.Name</td>
+                                            <td>@provider.Number</td>
+                                            <td>
+                                                <span class="badge @(provider.IsDoctor ? "bg-primary" : "bg-success")">
+                                                    @(provider.IsDoctor ? "Doctor" : "Nurse")
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            No providers found for this hospital.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div> 

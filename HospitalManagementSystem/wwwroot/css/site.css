@@ -1,0 +1,94 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Custom styles for better link visibility */
+.btn-link {
+  text-decoration: none !important;
+  color: #0d6efd !important;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-link:hover {
+  text-decoration: underline !important;
+  color: #0a58ca !important;
+  background-color: transparent !important;
+}
+
+.list-group-item .btn-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0;
+  border: none;
+  background: none;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.nav-link {
+  color: #495057 !important;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: #0d6efd !important;
+}
+
+/* Make all links clearly visible */
+a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0a58ca;
+  text-decoration: underline;
+}
+
+/* Ensure buttons are clickable */
+.btn {
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}

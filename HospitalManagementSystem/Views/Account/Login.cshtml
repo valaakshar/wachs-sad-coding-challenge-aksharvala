@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Hospital Management System Login</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Select Your Role:</label>
+                        <select class="form-select" id="role" name="role" required onchange="toggleAdditionalFields()">
+                            <option value="">Choose your role...</option>
+                            @foreach (var role in ViewBag.Roles)
+                            {
+                                <option value="@role">@role</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3" id="providerSection" style="display: none;">
+                        <label for="providerName" class="form-label">Select Your Name (if Doctor/Nurse):</label>
+                        <select class="form-select" id="providerName" name="providerName">
+                            <option value="">Choose your name...</option>
+                            @foreach (var provider in ViewBag.Providers)
+                            {
+                                <option value="@provider">@provider</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3" id="hospitalSection" style="display: none;">
+                        <label for="hospitalLocation" class="form-label">Select Your Hospital (if Nurse):</label>
+                        <select class="form-select" id="hospitalLocation" name="hospitalLocation">
+                            <option value="">Choose your hospital...</option>
+                            @foreach (var hospital in ViewBag.Hospitals)
+                            {
+                                <option value="@hospital">@hospital</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleAdditionalFields() {
+    const role = document.getElementById('role').value;
+    const providerSection = document.getElementById('providerSection');
+    const hospitalSection = document.getElementById('hospitalSection');
+    
+    // Hide both sections initially
+    providerSection.style.display = 'none';
+    hospitalSection.style.display = 'none';
+    
+    // Show relevant sections based on role
+    if (role === 'Doctor' || role === 'Nurse') {
+        providerSection.style.display = 'block';
+    }
+    
+    if (role === 'Nurse') {
+        hospitalSection.style.display = 'block';
+    }
+}
+</script> 

@@ -1,0 +1,66 @@
+@model IEnumerable<HospitalManagementSystem.Models.Treatment>
+@{
+    ViewData["Title"] = "Treatments";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>All Treatments</h2>
+        <p class="lead">View and manage all treatment records.</p>
+        <a href="/Home/CreateTreatment" class="btn btn-primary mb-3">
+            <i class="bi bi-plus-circle"></i> Create New Treatment
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Treatment Records</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Details</th>
+                                    <th>Hospital</th>
+                                    <th>Provider</th>
+                                    <th>Patient</th>
+                                    <th>Date/Time Discharged</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var treatment in Model)
+                                {
+                                    <tr>
+                                        <td>@(string.IsNullOrEmpty(treatment.Details) ? "-" : treatment.Details)</td>
+                                        <td>@treatment.Hospital</td>
+                                        <td>@(string.IsNullOrEmpty(treatment.Provider) ? "-" : treatment.Provider)</td>
+                                        <td>@treatment.Patient</td>
+                                        <td>@(treatment.DateTimeDischarged?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                                        <td>
+                                            <a href="/Home/EditTreatment/@Model.ToList().IndexOf(treatment)" class="btn btn-sm btn-outline-primary">
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        No treatments found.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div> 
